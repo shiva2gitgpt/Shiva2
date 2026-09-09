@@ -6,4 +6,4 @@ verify:
     - node --check server.js
     - node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package.json OK')"
     - node -e "const fs=require('fs'); const s=fs.readFileSync('index.html','utf8'); if(!s.includes('<!DOCTYPE html>')||!s.includes('</html>')) process.exit(1); console.log('index.html structure OK')"
-    - node -e "const fs=require('fs'); const s=fs.readFileSync('server.js','utf8'); if(!s.includes('gemini-3.6-flash')||!s.includes('openai/gpt-oss-120b')||!s.includes('model:aiResult.model')) process.exit(1); console.log('AI compatibility checks OK')"
+    - node -e "const fs=require('fs'); const s=fs.readFileSync('server.js','utf8'); if(!s.includes('gemini-3.6-flash')||!s.includes('openai/gpt-oss-120b')||!s.includes('message:aiResult.reply')||!s.includes('model:aiResult.model')) process.exit(1); console.log('AI compatibility checks OK')"
