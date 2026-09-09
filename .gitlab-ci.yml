@@ -1,0 +1,7 @@
+image: node:22-alpine
+
+verify:
+  script:
+    - node --check server.js
+    - node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package.json OK')"
+    - node -e "const fs=require('fs'); const s=fs.readFileSync('index.html','utf8'); if(!s.includes('<!DOCTYPE html>')||!s.includes('</html>')) process.exit(1); console.log('index.html structure OK')"
