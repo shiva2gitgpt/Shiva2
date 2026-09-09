@@ -1,11 +1,12 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "name": "Shiva 2.0 Unified Foundation Contract",
-  "principle": "All Shiva foundations are one authenticated workspace. UI sections can open one another and use the same user-scoped APIs; no foundation bypasses authorization or another user's data boundary.",
+  "principle": "All Shiva foundations are one authenticated workspace. Account Center manages identity, sessions, recovery and device account switching; every server operation remains user-scoped.",
   "identity": "users",
   "authentication": "sessions",
-  "account_center": "users + sessions + security + navigation + recovery",
-  "recovery": "authenticated workspace backup/restore through the same authorized APIs",
+  "account_center": "profile + password + sessions + recovery + account switching + create account navigation",
+  "recovery": "authenticated workspace backup/restore through the same authorized APIs; account password recovery must remain server-authorized",
+  "device_accounts": "local account switcher stores only the session token and public identity metadata for up to 8 explicitly saved accounts",
   "workspace": ["chats", "memories", "projects", "tasks"],
   "ai": ["/api/message", "/api/status"],
   "ai_modes": ["unified", "split"],
@@ -28,12 +29,13 @@
     "workspace": "/index.html",
     "account_center": "/account-center.html",
     "agent": "/agent.html",
-    "navigation": "All user-facing foundations may link to the other sections; the shared session remains the identity boundary."
+    "navigation": "All user-facing foundations can open the other sections while the authenticated session remains the identity boundary."
   },
   "security": {
     "authorization": "Bearer session token",
     "ownership": "Every authenticated workspace query/mutation is scoped to req.user.user_id",
-    "secrets": "Provider API keys remain server-side",
+    "secrets": "Provider API keys and password hashes remain server-side",
+    "account_switching": "Switching changes the active bearer session; workspace data never crosses user ownership boundaries",
     "agent": "Agent actions use the same authenticated workspace APIs and cannot cross user ownership boundaries"
   },
   "deployment": {
