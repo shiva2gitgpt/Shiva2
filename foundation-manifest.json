@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "name": "Shiva 2.0 Foundation Contract",
+  "principle": "Foundations share authenticated workspace state through server-side APIs; no foundation bypasses authorization or directly mutates another foundation's private data.",
+  "identity": "users",
+  "authentication": "sessions",
+  "account": "users + sessions",
+  "workspace": ["chats", "memories", "projects", "tasks"],
+  "ai": ["/api/message", "/api/status"],
+  "access": {
+    "auth": ["/api/auth/me", "/api/auth/logout"],
+    "account": ["/api/account/sessions", "/api/account/change-password"],
+    "chat": ["/api/chats", "/api/chats/:id"],
+    "memory": ["/api/memory", "/api/memory/:id"],
+    "projects": ["/api/projects", "/api/projects/:id"],
+    "tasks": ["/api/tasks", "/api/tasks/:id"],
+    "ai_context": "Authenticated /api/message receives the same user's Memory, Projects, Tasks and current Project context."
+  },
+  "ui": {
+    "source_of_truth": "index.html",
+    "account_center": "/account-center.html",
+    "navigation": "UI sections consume the shared authenticated workspace APIs; data ownership remains server-side by user_id."
+  },
+  "security": {
+    "authorization": "Bearer session token",
+    "ownership": "Every authenticated workspace query/mutation is scoped to req.user.user_id",
+    "secrets": "Provider API keys remain server-side"
+  },
+  "deployment": {
+    "canonical_branch": "main",
+    "canonical_source": "GitLab",
+    "mirror": "GitHub",
+    "runtime": "Render"
+  }
+}
