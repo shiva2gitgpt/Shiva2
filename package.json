@@ -1,0 +1,20 @@
+{
+  "name": "shiva2-backend",
+  "version": "1.0.0",
+  "description": "Shiva 2.0 backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "node --check server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "SHIVA",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "openai": "^7.10.0",
+    "pg": "^8.23.0"
+  }
+}
