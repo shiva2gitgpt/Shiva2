@@ -1,14 +1,22 @@
 {
-  "version": "1.0.0",
-  "name": "Shiva 2.0 Foundation Contract",
-  "principle": "Foundations share authenticated workspace state through server-side APIs; no foundation bypasses authorization or directly mutates another foundation's private data.",
+  "version": "2.0.0",
+  "name": "Shiva 2.0 Unified Foundation Contract",
+  "principle": "All Shiva foundations are one authenticated workspace. UI sections can open one another and use the same user-scoped APIs; no foundation bypasses authorization or another user's data boundary.",
   "identity": "users",
   "authentication": "sessions",
-  "account": "users + sessions",
+  "account_center": "users + sessions + security + navigation + recovery",
+  "recovery": "authenticated workspace backup/restore through the same authorized APIs",
   "workspace": ["chats", "memories", "projects", "tasks"],
   "ai": ["/api/message", "/api/status"],
+  "ai_modes": ["unified", "split"],
+  "autonomous_agent": {
+    "ui": "/agent.html",
+    "reasoning": "/api/message",
+    "actions": ["create_project", "create_task", "save_memory", "navigate"],
+    "chat_history": "agent runs are saved as authenticated chats"
+  },
   "access": {
-    "auth": ["/api/auth/me", "/api/auth/logout"],
+    "auth": ["/api/auth/me", "/api/auth/logout", "/api/auth/signup", "/api/auth/login"],
     "account": ["/api/account/sessions", "/api/account/change-password"],
     "chat": ["/api/chats", "/api/chats/:id"],
     "memory": ["/api/memory", "/api/memory/:id"],
@@ -17,19 +25,22 @@
     "ai_context": "Authenticated /api/message receives the same user's Memory, Projects, Tasks and current Project context."
   },
   "ui": {
-    "source_of_truth": "index.html",
+    "workspace": "/index.html",
     "account_center": "/account-center.html",
-    "navigation": "UI sections consume the shared authenticated workspace APIs; data ownership remains server-side by user_id."
+    "agent": "/agent.html",
+    "navigation": "All user-facing foundations may link to the other sections; the shared session remains the identity boundary."
   },
   "security": {
     "authorization": "Bearer session token",
     "ownership": "Every authenticated workspace query/mutation is scoped to req.user.user_id",
-    "secrets": "Provider API keys remain server-side"
+    "secrets": "Provider API keys remain server-side",
+    "agent": "Agent actions use the same authenticated workspace APIs and cannot cross user ownership boundaries"
   },
   "deployment": {
     "canonical_branch": "main",
     "canonical_source": "GitLab",
     "mirror": "GitHub",
-    "runtime": "Render"
+    "runtime": "Render",
+    "static_routes": ["/index.html", "/account-center.html", "/agent.html"]
   }
 }
